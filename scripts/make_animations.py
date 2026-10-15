@@ -21,9 +21,9 @@ ROOT = Path(__file__).resolve().parent.parent
 SRC, OUT = ROOT / "assets" / "src", ROOT / "assets"
 
 CHARCOAL = np.array([27, 30, 35], float)
-TAUPE = np.array([214, 205, 195], float)      # panel B
+TAUPE = np.array([207, 199, 196], float)      # panel B, brand taupe #CFC7C4
 RING = np.array([205, 195, 185], float)
-SLATE = np.array([117, 126, 140], float)
+SLATE = np.array([115, 126, 141], float)      # brand slate #737E8D
 WHITE = np.array([255, 255, 255], float)
 GREEN = np.array([31, 138, 91], float)
 SS = 4  # supersampling factor

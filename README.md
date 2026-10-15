@@ -1,6 +1,6 @@
 # Neo Phake: Email Signature
 
-A two-panel, table-based HTML email signature for Neo Phake, styled after the supplied reference sheet and built around the NP monogram. A charcoal panel holds the portrait and logo, and a warm taupe panel holds the name, title, contact rows and WhatsApp call to action. It is built for Gmail, Outlook and Apple Mail.
+A two-panel, table-based HTML email signature for Neo Phake, Founder & CEO of **NP Active Holdings (Pty) Ltd**, styled after the supplied reference sheet and built around the NP monogram. A charcoal panel holds the portrait and logo, and a warm taupe panel holds the name, title, contact rows and WhatsApp call to action. It is built for Gmail, Outlook and Apple Mail.
 
 | Desktop | Phone (stacks automatically) |
 |---|---|
@@ -18,7 +18,7 @@ Simulated dark mode (forced colour inversion, as in Outlook and the Gmail apps):
 
 | File | Purpose |
 |---|---|
-| `signature.html` | **Copy-ready animated signature** built from `config.json` (sample contact values until you replace them) |
+| `signature.html` | **Copy-ready animated signature** built from `config.json` (details from the NP Active Holdings deck) |
 | `signature-static.html` | Same signature with still images only |
 | `signature.template.html` | Same signature with every variable as a `{{PLACEHOLDER}}` |
 | `config.json` | Neo's details. Edit this file, then rebuild |
@@ -35,7 +35,7 @@ Simulated dark mode (forced colour inversion, as in Outlook and the Gmail apps):
 
 ## Design notes
 
-- **Style:** two-tone panels taken from the reference sheet. Charcoal `#1B1E23` and taupe `#D6CDC3`, with the monogram's slate `#757E8C` used for the short rule and the baseline.
+- **Style:** two-tone panels taken from the reference sheet. Charcoal `#1B1E23`, with the NP Active Holdings deck's own taupe `#CFC7C4` and slate `#737E8D`. The slate is used for the short rule and the baseline.
 - **Typography:** the name echoes the serif monogram. *Neo* is set in Georgia italic and PHAKE in spaced Georgia capitals. The title uses small, tracked sans-serif capitals. Contact details use Helvetica/Arial at 12px.
 - **Logo:** the monogram was extracted from its textured background, so it sits cleanly on the charcoal panel at 52px.
 - **WhatsApp:** an outlined charcoal pill with a green WhatsApp icon reads `CHAT ON WHATSAPP →`. It is drawn with a cell border, so Outlook keeps it.
@@ -65,23 +65,24 @@ Email clients don't run CSS animation or JavaScript, so the motion comes from fo
 | Placeholder | Current value | Notes |
 |---|---|---|
 | `{{FIRST_NAME}}` / `{{LAST_NAME}}` / `{{FULL_NAME}}` | Neo / Phake / Neo Phake | |
-| `{{JOB_TITLE}}` | Founder & Principal Consultant | **SAMPLE: confirm** |
-| `{{PHONE_DISPLAY}}` | +27 82 000 0000 | **SAMPLE**: how the number is shown |
-| `{{PHONE_E164}}` | +27820000000 | **SAMPLE**: used in `tel:`; `+27`, no spaces, no leading 0 |
-| `{{WHATSAPP_NUMBER}}` | 27820000000 | **SAMPLE**: used in `https://wa.me/…`; no `+`, spaces or leading 0 |
-| `{{EMAIL}}` | neo@phakeadvisory.co.za | **SAMPLE** |
-| `{{WEBSITE_URL}}` / `{{WEBSITE_DISPLAY}}` | https://www.phakeadvisory.co.za / phakeadvisory.co.za | **SAMPLE** |
-| `{{LOCATION}}` | Johannesburg, ZA | **SAMPLE**: shown with the pin icon |
-| `{{TAGLINE}}` | Strategy · Technology · Growth | **SAMPLE**: or delete the last row of the template |
+| `{{JOB_TITLE}}` | Founder & CEO | Confirmed |
+| `{{COMPANY_NAME}}` | NP Active Holdings (Pty) Ltd | From the deck |
+| `{{PHONE_DISPLAY}}` | +27 76 403 2183 | From the deck: how the number is shown |
+| `{{PHONE_E164}}` | +27764032183 | Used in `tel:`; `+27`, no spaces, no leading 0 |
+| `{{WHATSAPP_NUMBER}}` | 27764032183 | Used in `https://wa.me/…`; no `+`, spaces or leading 0 |
+| `{{EMAIL}}` | neo@npactive.co.za | **Assumed**: follows the deck's `@npactive.co.za` domain |
+| `{{WEBSITE_URL}}` / `{{WEBSITE_DISPLAY}}` | https://www.npactive.co.za / npactive.co.za | **Assumed** from the email domain |
+| `{{LOCATION}}` | 753 Prince George Ave, Brenthurst, Johannesburg | From the deck; wraps on phones |
+| `{{TAGLINE}}` | Diverse Media · Sustainable Growth · Operational Excellence | From the deck's positioning line; or delete the last row of the template |
 | `{{ASSET_BASE}}` | GitHub raw URL of the `assets/` folder | Public **https** folder holding the portrait, logo and icons (see below) |
 
 **Converting a South African number:** `082 123 4567` becomes `+27821234567` for the phone field and `27821234567` for WhatsApp.
 
-### Still needed from Neo
-1. Exact job title.
-2. Mobile number, which is also used for WhatsApp unless a separate business number is preferred.
-3. Email address and website.
-4. Where to host the images. The default GitHub raw URL only works while this repository is **public**. Copying the `assets/` folder to the company website or a CDN and pointing `ASSET_BASE` at it is more permanent.
+### Still to confirm
+1. **Neo's email:** that `neo@npactive.co.za` exists. The deck only shows `Ntando@npactive.co.za`.
+2. **Website:** that `https://www.npactive.co.za` is live. It isn't in the deck; it's inferred from the email domain.
+3. **Phone and WhatsApp:** that +27 76 403 2183 is the number Neo wants on the signature and that it is on WhatsApp. The deck lists it as the company contact number.
+4. **Image hosting:** the default GitHub raw URL only works while this repository is **public**. Copying the `assets/` folder to the company website or a CDN and pointing `ASSET_BASE` at it is more permanent.
 
 ## Rebuild after editing
 
@@ -132,7 +133,7 @@ iOS only stores plain or lightly styled signatures. Email the signature to yours
 
 Send a test email to a Gmail address and an Outlook address, then check each item on both a desktop and a phone.
 
-- [ ] **WhatsApp:** tap *Chat on WhatsApp →*. WhatsApp (or WhatsApp Web) opens a chat with **Neo's number** (not 27820000000).
+- [ ] **WhatsApp:** tap *Chat on WhatsApp →*. WhatsApp (or WhatsApp Web) opens a chat with **+27 76 403 2183**.
 - [ ] **WhatsApp URL:** hover over the link. It reads exactly `https://wa.me/27XXXXXXXXX`, with no `+`, spaces or leading 0.
 - [ ] **Phone:** on a phone, tapping the number offers to call `+27…`. On desktop it offers FaceTime, Teams or Skype.
 - [ ] **Email:** clicking the address opens a new message addressed to Neo.
