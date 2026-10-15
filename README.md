@@ -1,6 +1,6 @@
 # Neo Phake: Email Signature
 
-A compact, table-based HTML email signature for Neo Phake. It uses a charcoal-on-white base, muted gold detailing, monospaced micro-labels and a restrained WhatsApp call to action. It is built for Gmail, Outlook and Apple Mail.
+A two-panel, table-based HTML email signature for Neo Phake, styled after the supplied reference sheet and built around the NP monogram. A charcoal panel holds the portrait and logo, and a warm taupe panel holds the name, title, contact rows and WhatsApp call to action. It is built for Gmail, Outlook and Apple Mail.
 
 | Desktop | Phone (stacks automatically) |
 |---|---|
@@ -18,17 +18,21 @@ Simulated dark mode (forced colour inversion, as in Outlook and the Gmail apps):
 | `signature.template.html` | Same signature with every variable as a `{{PLACEHOLDER}}` |
 | `config.json` | Neo's details. Edit this file, then rebuild |
 | `build.py` | Fills the template, checks number formats, and writes `signature.html` + `preview/signature.html` |
-| `assets/neo-phake-portrait.png` | 192×192 round portrait with a gold ring (shown at 84×84 for retina sharpness) |
-| `assets/neo-phake-portrait-square.jpg` | Square fallback portrait (7 KB) if you prefer a lighter file |
+| `assets/neo-phake-portrait.png` | 248×248 round portrait with a taupe ring (shown at 124×124 for retina sharpness) |
+| `assets/np-logo.png` | NP monogram lifted onto a transparent background, for the charcoal panel |
+| `assets/np-logo-light.png` | Monogram variant with a charcoal "P", for light backgrounds (not used in the signature) |
+| `assets/icon-*.png` | Round contact icons (phone, email, web, location, WhatsApp), 72px for 18px display |
 | `preview/` | Local preview HTML and rendered screenshots |
 
 ## Design notes
 
-- **Hierarchy:** the name is set in light + bold weights at 21px. The title is in small gold capitals with tracking. The company is in a softer grey. Contact rows sit under single-letter monospaced labels (`M` `E` `W`), which give a quiet technical feel.
-- **Geometry:** a 1px hairline divider has a short gold "node" at the top. A gold baseline segment runs into a warm-grey hairline. These are the only decorative elements, and both are built from table cells, so no images are used.
-- **WhatsApp:** an outlined green pill reads `● Chat on WhatsApp →`. It is drawn with a cell border, so it survives Outlook and keeps working if a client strips colours.
-- **Responsive without media queries:** the identity and contact blocks are two `align="left"` tables. They sit side by side up to the 580px max width and stack on phones.
-- **Dark mode:** the signature uses no background colours, so clients that invert colours keep the text readable. The gold and green are mid-tones that read on both light and dark backgrounds.
+- **Style:** two-tone panels taken from the reference sheet. Charcoal `#1B1E23` and taupe `#D6CDC3`, with the monogram's slate `#757E8C` used for the short rule and the baseline.
+- **Typography:** the name echoes the serif monogram. *Neo* is set in Georgia italic and PHAKE in spaced Georgia capitals. The title uses small, tracked sans-serif capitals. Contact details use Helvetica/Arial at 12px.
+- **Logo:** the monogram was extracted from its textured background, so it sits cleanly on the charcoal panel at 52px.
+- **WhatsApp:** an outlined charcoal pill with a green WhatsApp icon reads `CHAT ON WHATSAPP →`. It is drawn with a cell border, so Outlook keeps it.
+- **Background colours stripped:** all text sits on the taupe panel in charcoal, so it stays readable on plain white. Only the photo and logo sit on charcoal.
+- **Phones:** the two panels are `align="left"` tables. They sit side by side at 600px and stack on a phone, with the charcoal band filling the full width.
+- **Dark mode:** clients that invert colours flip the panels (charcoal turns light and taupe turns dark). Text stays readable, as the dark-mode preview shows.
 
 ## Placeholders
 
@@ -36,24 +40,22 @@ Simulated dark mode (forced colour inversion, as in Outlook and the Gmail apps):
 |---|---|---|
 | `{{FIRST_NAME}}` / `{{LAST_NAME}}` / `{{FULL_NAME}}` | Neo / Phake / Neo Phake | |
 | `{{JOB_TITLE}}` | Founder & Principal Consultant | **SAMPLE: confirm** |
-| `{{COMPANY_NAME}}` | Phake Advisory | **SAMPLE: confirm** |
 | `{{PHONE_DISPLAY}}` | +27 82 000 0000 | **SAMPLE**: how the number is shown |
 | `{{PHONE_E164}}` | +27820000000 | **SAMPLE**: used in `tel:`; `+27`, no spaces, no leading 0 |
 | `{{WHATSAPP_NUMBER}}` | 27820000000 | **SAMPLE**: used in `https://wa.me/…`; no `+`, spaces or leading 0 |
 | `{{EMAIL}}` | neo@phakeadvisory.co.za | **SAMPLE** |
 | `{{WEBSITE_URL}}` / `{{WEBSITE_DISPLAY}}` | https://www.phakeadvisory.co.za / phakeadvisory.co.za | **SAMPLE** |
-| `{{LOCATION}}` | Johannesburg, ZA | **SAMPLE** |
-| `{{TAGLINE}}` | Strategy · Technology · Growth | **SAMPLE**: or remove the last row |
-| `{{PHOTO_URL}}` | GitHub raw URL of `assets/neo-phake-portrait.png` | Must be a public **https** URL (see below) |
+| `{{LOCATION}}` | Johannesburg, ZA | **SAMPLE**: shown with the pin icon |
+| `{{TAGLINE}}` | Strategy · Technology · Growth | **SAMPLE**: or delete the last row of the template |
+| `{{ASSET_BASE}}` | GitHub raw URL of the `assets/` folder | Public **https** folder holding the portrait, logo and icons (see below) |
 
 **Converting a South African number:** `082 123 4567` becomes `+27821234567` for the phone field and `27821234567` for WhatsApp.
 
 ### Still needed from Neo
-1. Exact job title and company or brand name.
+1. Exact job title.
 2. Mobile number, which is also used for WhatsApp unless a separate business number is preferred.
 3. Email address and website.
-4. A company logo, if one exists. Without one, the text-based brand treatment (gold title and grey company line) stands in.
-5. Where to host the portrait. The default GitHub raw URL only works while this repository is **public**. A company website, CDN or Google Drive public link is more permanent.
+4. Where to host the images. The default GitHub raw URL only works while this repository is **public**. Copying the `assets/` folder to the company website or a CDN and pointing `ASSET_BASE` at it is more permanent.
 
 ## Rebuild after editing
 
@@ -73,7 +75,7 @@ Always copy the **rendered** signature, not the source code. Open `signature.htm
 3. Under **Signature defaults**, choose it for new emails and for replies and forwards.
 4. Optional: tick *Insert signature before quoted text*.
 5. Click **Save Changes** at the bottom of the page.
-6. If the portrait doesn't appear, the image URL is not publicly reachable. Host it elsewhere, rebuild, and paste again.
+6. If the images don't appear, `ASSET_BASE` is not publicly reachable. Host it elsewhere, rebuild, and paste again.
 
 The Gmail mobile apps use the web signature only when the mobile signature setting is turned off.
 
@@ -109,7 +111,7 @@ Send a test email to a Gmail address and an Outlook address, then check each ite
 - [ ] **Phone:** on a phone, tapping the number offers to call `+27…`. On desktop it offers FaceTime, Teams or Skype.
 - [ ] **Email:** clicking the address opens a new message addressed to Neo.
 - [ ] **Website:** the link opens the correct site over **https**, and so does the portrait, which also links to the site.
-- [ ] **Image:** the portrait loads for an external recipient with images enabled. With images blocked, the alt text "Neo Phake, Founder & Principal Consultant" shows instead.
+- [ ] **Images:** the portrait, logo and icons load for an external recipient with images enabled. With images blocked, the alt text shows instead ("Neo Phake", "NP", "Mobile" and so on).
 - [ ] **Dark mode:** the name and contact details stay readable in Gmail (iOS/Android), Outlook and Apple Mail in dark mode.
 - [ ] **Layout:** the signature sits side by side on desktop and stacks neatly on a phone, with no horizontal scrolling.
 - [ ] **Replies:** the signature appears on replies and forwards, if enabled.

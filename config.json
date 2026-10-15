@@ -1,22 +1,16 @@
 {
   "_note": "Values marked SAMPLE are sensible placeholders. Replace them with Neo's real details, then run: python3 build.py",
-
   "FIRST_NAME": "Neo",
   "LAST_NAME": "Phake",
   "FULL_NAME": "Neo Phake",
   "JOB_TITLE": "Founder & Principal Consultant",
-  "COMPANY_NAME": "Phake Advisory",
-
   "PHONE_DISPLAY": "+27 82 000 0000",
   "PHONE_E164": "+27820000000",
   "WHATSAPP_NUMBER": "27820000000",
-
   "EMAIL": "neo@phakeadvisory.co.za",
   "WEBSITE_URL": "https://www.phakeadvisory.co.za",
   "WEBSITE_DISPLAY": "phakeadvisory.co.za",
-
   "LOCATION": "Johannesburg, ZA",
   "TAGLINE": "Strategy · Technology · Growth",
-
-  "PHOTO_URL": "https://raw.githubusercontent.com/ThatoMolaba/neo-phake-email-signiture/claude/premium-email-signature-design-qm8yte/assets/neo-phake-portrait.png"
+  "ASSET_BASE": "https://raw.githubusercontent.com/ThatoMolaba/neo-phake-email-signiture/claude/premium-email-signature-design-qm8yte/assets"
 }
