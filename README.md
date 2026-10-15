@@ -6,6 +6,10 @@ A two-panel, table-based HTML email signature for Neo Phake, styled after the su
 |---|---|
 | ![Desktop preview](preview/light.png) | ![Mobile preview](preview/mobile.png) |
 
+Motion (recorded from the live signature):
+
+![Animated preview](preview/animated.gif)
+
 Simulated dark mode (forced colour inversion, as in Outlook and the Gmail apps):
 
 ![Dark-mode preview](preview/dark.png)
@@ -14,14 +18,19 @@ Simulated dark mode (forced colour inversion, as in Outlook and the Gmail apps):
 
 | File | Purpose |
 |---|---|
-| `signature.html` | **Copy-ready signature** built from `config.json` (sample contact values until you replace them) |
+| `signature.html` | **Copy-ready animated signature** built from `config.json` (sample contact values until you replace them) |
+| `signature-static.html` | Same signature with still images only |
 | `signature.template.html` | Same signature with every variable as a `{{PLACEHOLDER}}` |
 | `config.json` | Neo's details. Edit this file, then rebuild |
-| `build.py` | Fills the template, checks number formats, and writes `signature.html` + `preview/signature.html` |
+| `build.py` | Fills the template, checks number formats, and writes both signatures plus their `preview/` copies |
+| `scripts/make_animations.py` | Renders the four animated GIFs from `assets/src/` |
+| `assets/src/` | Original portrait and logo files used to render the images |
 | `assets/neo-phake-portrait.png` | 248×248 round portrait with a taupe ring (shown at 124×124 for retina sharpness) |
 | `assets/np-logo.png` | NP monogram lifted onto a transparent background, for the charcoal panel |
 | `assets/np-logo-light.png` | Monogram variant with a charcoal "P", for light backgrounds (not used in the signature) |
 | `assets/icon-*.png` | Round contact icons (phone, email, web, location, WhatsApp), 72px for 18px display |
+| `assets/*-live.gif` | Animated portrait ring, monogram, rule and WhatsApp icon |
+| `assets/rule.png` | Still version of the slate rule |
 | `preview/` | Local preview HTML and rendered screenshots |
 
 ## Design notes
@@ -33,6 +42,23 @@ Simulated dark mode (forced colour inversion, as in Outlook and the Gmail apps):
 - **Background colours stripped:** all text sits on the taupe panel in charcoal, so it stays readable on plain white. Only the photo and logo sit on charcoal.
 - **Phones:** the two panels are `align="left"` tables. They sit side by side at 600px and stack on a phone, with the charcoal band filling the full width.
 - **Dark mode:** clients that invert colours flip the panels (charcoal turns light and taupe turns dark). Text stays readable, as the dark-mode preview shows.
+
+## Motion
+
+Email clients don't run CSS animation or JavaScript, so the motion comes from four small animated GIFs. All the text stays live.
+
+| Element | Motion | Loop | Size |
+|---|---|---|---|
+| Portrait ring | A soft light arc orbits the ring | 3.3 s | 159 KB |
+| NP monogram | A diagonal light sheen passes over the strokes | about 6 s | 39 KB |
+| Rule under the title | A glint travels along the slate line | about 3.4 s | 15 KB |
+| WhatsApp icon | A ripple spreads out from the glyph | about 3.4 s | 39 KB |
+
+- **Where it plays:** Gmail (web and apps), Apple Mail, iPhone Mail, Outlook on the web, Outlook for Mac and the new Outlook for Windows.
+- **Classic Outlook for Windows:** shows only the first frame. Every GIF's first frame is the finished still, so nothing looks broken.
+- **Pace:** the motion is slow, with pauses between passes, so it doesn't distract while someone reads the email.
+- **Turning it off:** use `signature-static.html` for an identical signature with no motion.
+- **Changing the motion:** edit `scripts/make_animations.py`, then run `python3 scripts/make_animations.py && python3 build.py`.
 
 ## Placeholders
 
@@ -111,6 +137,7 @@ Send a test email to a Gmail address and an Outlook address, then check each ite
 - [ ] **Phone:** on a phone, tapping the number offers to call `+27…`. On desktop it offers FaceTime, Teams or Skype.
 - [ ] **Email:** clicking the address opens a new message addressed to Neo.
 - [ ] **Website:** the link opens the correct site over **https**, and so does the portrait, which also links to the site.
+- [ ] **Motion:** the ring, monogram, rule and WhatsApp icon animate in Gmail or Apple Mail. In classic Outlook they show as clean stills.
 - [ ] **Images:** the portrait, logo and icons load for an external recipient with images enabled. With images blocked, the alt text shows instead ("Neo Phake", "NP", "Mobile" and so on).
 - [ ] **Dark mode:** the name and contact details stay readable in Gmail (iOS/Android), Outlook and Apple Mail in dark mode.
 - [ ] **Layout:** the signature sits side by side on desktop and stacks neatly on a phone, with no horizontal scrolling.

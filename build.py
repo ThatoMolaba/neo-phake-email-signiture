@@ -2,8 +2,10 @@
 """Fill signature.template.html with values from config.json.
 
 Outputs:
-  signature.html          production signature (absolute HTTPS image URL)
-  preview/signature.html  same, but pointing at the local assets/ folder for offline preview
+  signature.html                 animated signature (absolute HTTPS image URLs)
+  signature-static.html          same layout with still images only
+  preview/signature.html         animated, pointing at the local assets/ folder
+  preview/signature-static.html  still, pointing at the local assets/ folder
 """
 import html
 import json
@@ -15,6 +17,13 @@ ROOT = Path(__file__).resolve().parent
 TOKEN = re.compile(r"\{\{([A-Z_0-9]+)\}\}")
 
 # URL values are inserted verbatim; everything else is HTML-escaped.
+# Image sets: animated GIFs (first frame is a finished still) or plain stills.
+IMAGES = {
+    "": {"IMG_PORTRAIT": "portrait-live.gif", "IMG_LOGO": "logo-live.gif",
+         "IMG_RULE": "rule-live.gif", "IMG_WHATSAPP": "whatsapp-live.gif"},
+    "-static": {"IMG_PORTRAIT": "neo-phake-portrait.png", "IMG_LOGO": "np-logo.png",
+                "IMG_RULE": "rule.png", "IMG_WHATSAPP": "icon-whatsapp.png"},
+}
 RAW_KEYS = {"ASSET_BASE", "WEBSITE_URL"}
 
 
@@ -50,12 +59,13 @@ def main() -> None:
     validate(values)
     template = (ROOT / "signature.template.html").read_text()
 
-    (ROOT / "signature.html").write_text(render(template, values))
-
-    local = dict(values, ASSET_BASE="../assets")
     (ROOT / "preview").mkdir(exist_ok=True)
-    (ROOT / "preview" / "signature.html").write_text(render(template, local))
-    print("built signature.html and preview/signature.html")
+    for suffix, images in IMAGES.items():
+        v = dict(values, **images)
+        (ROOT / f"signature{suffix}.html").write_text(render(template, v))
+        local = dict(v, ASSET_BASE="../assets")
+        (ROOT / "preview" / f"signature{suffix}.html").write_text(render(template, local))
+        print(f"built signature{suffix}.html and preview/signature{suffix}.html")
 
 
 if __name__ == "__main__":
